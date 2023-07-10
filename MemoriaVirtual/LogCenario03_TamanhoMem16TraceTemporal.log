@@ -9,7 +9,7 @@
 
 --- Main Memory ---
 
-Memory size: 32 word(s) 
+Memory size: 16 word(s) 
 Block size: 1 word(s)/block 
 Cycles per access read: 1 unity 
 Cycles per access write: 2 unity 
@@ -20,7 +20,7 @@ Page size: 2 word(s)
 Replacement algorithm: FIFO 
 
 ---      Disk     ---
-Memory size: 32 word(s) 
+Memory size: 16 word(s) 
 Cycles per access read: 1 unity 
 Cycles per access write: 2 unity 
 Time cycle: 100 time unity 
@@ -144,86 +144,6 @@ Action = Stored data in Main Memory
 Block = 15 
 
 
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 16 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 17 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 18 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 19 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 20 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 21 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 22 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 23 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 24 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 25 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 26 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 27 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 28 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 29 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 30 
-
-
-Location: MAINMEMORY
-Action = Stored data in Main Memory  
-Block = 31 
-
-
 Location: DISK
 Action = Storing page in Disk 
 Address = 0x00000000 - Page 0
@@ -259,46 +179,6 @@ Action = Storing page in Disk
 Address = 0x0000000c - Page 6
 
 
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x0000000e - Page 7
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x00000010 - Page 8
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x00000012 - Page 9
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x00000014 - Page 10
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x00000016 - Page 11
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x00000018 - Page 12
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x0000001a - Page 13
-
-
-Location: DISK
-Action = Storing page in Disk 
-Address = 0x0000001c - Page 14
-
-
 ----------------------- Step: 001 to 030 || Trace: 2 1 -----------------------
 
 -----------------------    Beginning of translation   -----------------------
@@ -314,7 +194,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -322,7 +202,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 002 to 030 || Trace: 2 5 -----------------------
@@ -340,7 +220,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000100|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -348,7 +228,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 9 
 
 
 ----------------------- Step: 003 to 030 || Trace: 2 1 -----------------------
@@ -366,7 +246,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -374,7 +254,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 004 to 030 || Trace: 2 2 -----------------------
@@ -392,7 +272,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -400,7 +280,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 14 
+Block = 6 
 
 
 ----------------------- Step: 005 to 030 || Trace: 2 7 -----------------------
@@ -418,7 +298,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000011|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000110|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -426,7 +306,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 7 
+Block = 13 
 
 
 ----------------------- Step: 006 to 030 || Trace: 2 a -----------------------
@@ -470,7 +350,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -478,7 +358,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 008 to 030 || Trace: 2 2 -----------------------
@@ -496,7 +376,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -504,7 +384,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 14 
+Block = 6 
 
 
 ----------------------- Step: 009 to 030 || Trace: 2 6 -----------------------
@@ -522,7 +402,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000110|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -530,7 +410,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 12 
 
 
 ----------------------- Step: 010 to 030 || Trace: 2 4 -----------------------
@@ -548,7 +428,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
+| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000100|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -556,7 +436,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 4 
+Block = 8 
 
 
 ----------------------- Step: 011 to 030 || Trace: 2 2 -----------------------
@@ -574,7 +454,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -582,7 +462,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 14 
+Block = 6 
 
 
 ----------------------- Step: 012 to 030 || Trace: 2 5 -----------------------
@@ -600,7 +480,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000100|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -608,7 +488,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 9 
 
 
 ----------------------- Step: 013 to 030 || Trace: 2 f -----------------------
@@ -626,7 +506,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000100|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -634,7 +514,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 9 
+Block = 3 
 
 
 ----------------------- Step: 014 to 030 || Trace: 2 1 -----------------------
@@ -652,7 +532,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -660,7 +540,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 015 to 030 || Trace: 2 4 -----------------------
@@ -678,7 +558,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
+| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000100|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -686,7 +566,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 4 
+Block = 8 
 
 
 ----------------------- Step: 016 to 030 || Trace: 2 f -----------------------
@@ -704,7 +584,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000100|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -712,7 +592,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 9 
+Block = 3 
 
 
 ----------------------- Step: 017 to 030 || Trace: 2 7 -----------------------
@@ -730,7 +610,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000011|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000110|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -738,7 +618,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 7 
+Block = 13 
 
 
 ----------------------- Step: 018 to 030 || Trace: 2 c -----------------------
@@ -756,7 +636,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000110|         0|       XX |
+| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -764,7 +644,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 12 
+Block = 4 
 
 
 ----------------------- Step: 019 to 030 || Trace: 2 d -----------------------
@@ -782,7 +662,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000110|         1|       XX |     | 00000000000000000000000000110|         1|       XX |
+| 00000000000000000000000000110|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -790,7 +670,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 13 
+Block = 5 
 
 
 ----------------------- Step: 020 to 030 || Trace: 2 1 -----------------------
@@ -808,7 +688,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -816,7 +696,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 021 to 030 || Trace: 2 2 -----------------------
@@ -834,7 +714,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -842,7 +722,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 14 
+Block = 6 
 
 
 ----------------------- Step: 022 to 030 || Trace: 2 f -----------------------
@@ -860,7 +740,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000100|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -868,7 +748,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 9 
+Block = 3 
 
 
 ----------------------- Step: 023 to 030 || Trace: 2 1 -----------------------
@@ -886,7 +766,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -894,7 +774,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 024 to 030 || Trace: 2 7 -----------------------
@@ -912,7 +792,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000011|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000110|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -920,7 +800,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 7 
+Block = 13 
 
 
 ----------------------- Step: 025 to 030 || Trace: 2 2 -----------------------
@@ -938,7 +818,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -946,7 +826,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 14 
+Block = 6 
 
 
 ----------------------- Step: 026 to 030 || Trace: 2 c -----------------------
@@ -964,7 +844,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000110|         0|       XX |
+| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -972,7 +852,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 12 
+Block = 4 
 
 
 ----------------------- Step: 027 to 030 || Trace: 2 6 -----------------------
@@ -990,7 +870,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000110|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -998,7 +878,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 12 
 
 
 ----------------------- Step: 028 to 030 || Trace: 2 1 -----------------------
@@ -1016,7 +896,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000101|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -1024,7 +904,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 11 
 
 
 ----------------------- Step: 029 to 030 || Trace: 2 7 -----------------------
@@ -1042,7 +922,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000011|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000110|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -1050,7 +930,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 7 
+Block = 13 
 
 
 ----------------------- Step: 030 to 030 || Trace: 2 8 -----------------------
@@ -1068,7 +948,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000100|         0|       XX |     | 00000000000000000000000000101|         0|       XX |
+| 00000000000000000000000000100|         0|       XX |     | 00000000000000000000000000111|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -1076,7 +956,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 10 
+Block = 14 
 
 
 ------------------------------

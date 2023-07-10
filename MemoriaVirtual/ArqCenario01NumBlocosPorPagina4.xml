@@ -22,7 +22,7 @@
     </MainMemory>
 	<VirtualMemory>
         <pageSize>4</pageSize>
-        <diskMemorySize>8</diskMemorySize>
+        <diskMemorySize>16</diskMemorySize>
         <diskCiclesPerAccessRead>1</diskCiclesPerAccessRead>
         <diskCiclesPerAccessWrite>2</diskCiclesPerAccessWrite>
         <timeCicle>100</timeCicle>

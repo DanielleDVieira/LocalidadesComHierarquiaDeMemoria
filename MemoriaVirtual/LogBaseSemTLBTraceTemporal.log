@@ -20,7 +20,7 @@ Page size: 2 word(s)
 Replacement algorithm: FIFO 
 
 ---      Disk     ---
-Memory size: 8 word(s) 
+Memory size: 16 word(s) 
 Cycles per access read: 1 unity 
 Cycles per access write: 2 unity 
 Time cycle: 100 time unity 
@@ -34,27 +34,27 @@ Time cycle: 100 time unity
 2 1
 2 2
 2 7
-2 2
+2 a
 2 1
 2 2
 2 6
 2 4
 2 2
 2 5
-2 7
+2 f
 2 1
 2 4
+2 f
 2 7
-2 7
-2 4
-2 5
+2 c
+2 d
 2 1
 2 2
-2 7
+2 f
 2 1
 2 7
 2 2
-2 4
+2 c
 2 6
 2 1
 2 7
@@ -124,6 +124,26 @@ Action = Storing page in Disk
 Address = 0x00000006 - Page 3
 
 
+Location: DISK
+Action = Storing page in Disk 
+Address = 0x00000008 - Page 4
+
+
+Location: DISK
+Action = Storing page in Disk 
+Address = 0x0000000a - Page 5
+
+
+Location: DISK
+Action = Storing page in Disk 
+Address = 0x0000000c - Page 6
+
+
+Location: DISK
+Action = Storing page in Disk 
+Address = 0x0000000e - Page 7
+
+
 ----------------------- Step: 001 to 030 || Trace: 2 1 -----------------------
 
 -----------------------    Beginning of translation   -----------------------
@@ -131,6 +151,51 @@ Address = 0x00000006 - Page 3
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000000
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000a|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000b|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 0|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000000|  <->  |          0x00000005|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -139,7 +204,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -147,7 +212,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 1 
 
 
 ----------------------- Step: 002 to 030 || Trace: 2 5 -----------------------
@@ -157,6 +222,51 @@ Block = 5
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000002
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 0|  <--  |Main Memory - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 1|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000002|  <->  |          0x00000007|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -165,7 +275,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
+| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -173,7 +283,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 1 
+Block = 3 
 
 
 ----------------------- Step: 003 to 030 || Trace: 2 1 -----------------------
@@ -191,7 +301,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -199,7 +309,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 1 
 
 
 ----------------------- Step: 004 to 030 || Trace: 2 2 -----------------------
@@ -235,6 +345,51 @@ Block = 6
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000003
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 2|  <--  |Main Memory - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 2|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000003|  <->  |          0x00000006|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -243,7 +398,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -251,16 +406,61 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 5 
 
 
------------------------ Step: 006 to 030 || Trace: 2 2 -----------------------
+----------------------- Step: 006 to 030 || Trace: 2 a -----------------------
 
 -----------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
 Action = loading data in the Page Table 
-Virtual Page = 0x00000001
+Virtual Page = 0x00000005
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000a|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000b|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 3|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 3|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000a|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000b|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000005|  <->  |          0x00000001|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -269,7 +469,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000101|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -295,7 +495,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -303,7 +503,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 1 
 
 
 ----------------------- Step: 008 to 030 || Trace: 2 2 -----------------------
@@ -313,6 +513,51 @@ Block = 5
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000001
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 0|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000001|  <->  |          0x00000000|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -321,7 +566,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -329,7 +574,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 0 
 
 
 ----------------------- Step: 009 to 030 || Trace: 2 6 -----------------------
@@ -347,7 +592,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000001|         0|       XX |
+| 00000000000000000000000000011|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -355,7 +600,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 2 
+Block = 4 
 
 
 ----------------------- Step: 010 to 030 || Trace: 2 4 -----------------------
@@ -373,7 +618,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
+| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000001|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -381,7 +626,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 0 
+Block = 2 
 
 
 ----------------------- Step: 011 to 030 || Trace: 2 2 -----------------------
@@ -399,7 +644,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -407,7 +652,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 0 
 
 
 ----------------------- Step: 012 to 030 || Trace: 2 5 -----------------------
@@ -425,7 +670,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
+| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -433,16 +678,61 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 1 
+Block = 3 
 
 
------------------------ Step: 013 to 030 || Trace: 2 7 -----------------------
+----------------------- Step: 013 to 030 || Trace: 2 f -----------------------
 
 -----------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
 Action = loading data in the Page Table 
-Virtual Page = 0x00000003
+Virtual Page = 0x00000007
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 0|  <--  |Main Memory - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 1|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000007|  <->  |          0x00000002|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -451,7 +741,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -469,6 +759,51 @@ Block = 3
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000000
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 2|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000000|  <->  |          0x00000003|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -495,6 +830,51 @@ Block = 5
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000002
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 0|  <--  |Main Memory - Page 3|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000a|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000b|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 3|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000002|  <->  |          0x00000005|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -503,7 +883,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
+| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -511,16 +891,16 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 0 
+Block = 6 
 
 
------------------------ Step: 016 to 030 || Trace: 2 7 -----------------------
+----------------------- Step: 016 to 030 || Trace: 2 f -----------------------
 
 -----------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
 Action = loading data in the Page Table 
-Virtual Page = 0x00000003
+Virtual Page = 0x00000007
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -529,7 +909,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -547,32 +927,51 @@ Block = 3
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000003
+Page Fault
 
-Location: TRANSLATION
-Action = Translation Address  - Using = Page Table
-|----------------------------------------------------|     |----------------------------------------------------|
-|                  Virtual Address                   |     |                    Real Address                    |
-|----------------------------------------------------|     |----------------------------------------------------|
-|        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
-|------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
-|----------------------------------------------------|     |----------------------------------------------------|
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
 
 
------------------------       End of translation        -----------------------
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
 
 Location: MAINMEMORY
-Action = Loading data from Main Memory  
-Block = 3 
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 0|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
 
-
------------------------ Step: 018 to 030 || Trace: 2 4 -----------------------
-
------------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
-Action = loading data in the Page Table 
-Virtual Page = 0x00000002
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000003|  <->  |          0x00000001|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -581,33 +980,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
-|----------------------------------------------------|     |----------------------------------------------------|
-
-
------------------------       End of translation        -----------------------
-
-Location: MAINMEMORY
-Action = Loading data from Main Memory  
-Block = 0 
-
-
------------------------ Step: 019 to 030 || Trace: 2 5 -----------------------
-
------------------------    Beginning of translation   -----------------------
-
-Location: PAGETABLE
-Action = loading data in the Page Table 
-Virtual Page = 0x00000002
-
-Location: TRANSLATION
-Action = Translation Address  - Using = Page Table
-|----------------------------------------------------|     |----------------------------------------------------|
-|                  Virtual Address                   |     |                    Real Address                    |
-|----------------------------------------------------|     |----------------------------------------------------|
-|        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
-|------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
+| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -616,6 +989,103 @@ Action = Translation Address  - Using = Page Table
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
 Block = 1 
+
+
+----------------------- Step: 018 to 030 || Trace: 2 c -----------------------
+
+-----------------------    Beginning of translation   -----------------------
+
+Location: PAGETABLE
+Action = loading data in the Page Table 
+Virtual Page = 0x00000006
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 2|  <--  |Main Memory - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 1|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000006|  <->  |          0x00000007|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
+
+Location: TRANSLATION
+Action = Translation Address  - Using = Page Table
+|----------------------------------------------------|     |----------------------------------------------------|
+|                  Virtual Address                   |     |                    Real Address                    |
+|----------------------------------------------------|     |----------------------------------------------------|
+|        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
+|------------------------------|----------|----------|     |-----------------------------------------|----------|
+| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000001|         0|       XX |
+|----------------------------------------------------|     |----------------------------------------------------|
+
+
+-----------------------       End of translation        -----------------------
+
+Location: MAINMEMORY
+Action = Loading data from Main Memory  
+Block = 2 
+
+
+----------------------- Step: 019 to 030 || Trace: 2 d -----------------------
+
+-----------------------    Beginning of translation   -----------------------
+
+Location: PAGETABLE
+Action = loading data in the Page Table 
+Virtual Page = 0x00000006
+
+Location: TRANSLATION
+Action = Translation Address  - Using = Page Table
+|----------------------------------------------------|     |----------------------------------------------------|
+|                  Virtual Address                   |     |                    Real Address                    |
+|----------------------------------------------------|     |----------------------------------------------------|
+|        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
+|------------------------------|----------|----------|     |-----------------------------------------|----------|
+| 00000000000000000000000000110|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+|----------------------------------------------------|     |----------------------------------------------------|
+
+
+-----------------------       End of translation        -----------------------
+
+Location: MAINMEMORY
+Action = Loading data from Main Memory  
+Block = 3 
 
 
 ----------------------- Step: 020 to 030 || Trace: 2 1 -----------------------
@@ -651,6 +1121,51 @@ Block = 5
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000001
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 2|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000001|  <->  |          0x00000000|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -659,7 +1174,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -667,16 +1182,61 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 4 
 
 
------------------------ Step: 022 to 030 || Trace: 2 7 -----------------------
+----------------------- Step: 022 to 030 || Trace: 2 f -----------------------
 
 -----------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
 Action = loading data in the Page Table 
-Virtual Page = 0x00000003
+Virtual Page = 0x00000007
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 2|  <--  |Main Memory - Page 3|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000004|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000005|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 3|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000e|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000f|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000007|  <->  |          0x00000002|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -685,7 +1245,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000011|         1|       XX |     | 00000000000000000000000000001|         1|       XX |
+| 00000000000000000000000000111|         1|       XX |     | 00000000000000000000000000011|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -693,7 +1253,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 3 
+Block = 7 
 
 
 ----------------------- Step: 023 to 030 || Trace: 2 1 -----------------------
@@ -703,6 +1263,51 @@ Block = 3
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000000
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 0|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 0|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000000|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000001|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000000|  <->  |          0x00000003|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -711,7 +1316,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -719,7 +1324,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 1 
 
 
 ----------------------- Step: 024 to 030 || Trace: 2 7 -----------------------
@@ -729,6 +1334,51 @@ Block = 5
 Location: PAGETABLE
 Action = loading data in the Page Table 
 Virtual Page = 0x00000003
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 1|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000006|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000007|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000003|  <->  |          0x00000006|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -763,7 +1413,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
+| 00000000000000000000000000001|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -771,16 +1421,61 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 6 
+Block = 4 
 
 
------------------------ Step: 026 to 030 || Trace: 2 4 -----------------------
+----------------------- Step: 026 to 030 || Trace: 2 c -----------------------
 
 -----------------------    Beginning of translation   -----------------------
 
 Location: PAGETABLE
 Action = loading data in the Page Table 
-Virtual Page = 0x00000002
+Virtual Page = 0x00000006
+Page Fault
+
+----------------------      Beginning of paging        ----------------------
+
+Location: DISK
+Action = Loading page from Disk and store page in the aux vector 
+|--------------------|       |--------------------|
+|     aux vector     |  <--  |    disk    - Page 1|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: DISK
+Action = Loading page from Main Memory and storing page in Disk 
+|--------------------|       |--------------------|
+|    disk    - Page 1|  <--  |Main Memory - Page 2|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000002|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x00000003|
+|--------------------|       |--------------------|
+
+
+Location: MAINMEMORY
+Action = Store page in the Main Memory 
+|--------------------|       |--------------------|
+|Main Memory - Page 2|  <--  |     aux vector     |
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000c|
+|--------------------|       |--------------------|
+|               xxxxx|       |          0x0000000d|
+|--------------------|       |--------------------|
+
+
+Location: PAGETABLE
+Action = Update the Page Table 
+|--------------------|       |--------------------|
+|          0x00000006|  <->  |          0x00000001|
+|--------------------|       |--------------------|
+
+
+----------------------         End of paging           ----------------------
 
 Location: TRANSLATION
 Action = Translation Address  - Using = Page Table
@@ -789,7 +1484,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000010|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
+| 00000000000000000000000000110|         0|       XX |     | 00000000000000000000000000010|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -797,7 +1492,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 0 
+Block = 4 
 
 
 ----------------------- Step: 027 to 030 || Trace: 2 6 -----------------------
@@ -841,7 +1536,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000010|         1|       XX |
+| 00000000000000000000000000000|         1|       XX |     | 00000000000000000000000000000|         1|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -849,7 +1544,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 5 
+Block = 1 
 
 
 ----------------------- Step: 029 to 030 || Trace: 2 7 -----------------------
@@ -892,40 +1587,40 @@ Page Fault
 Location: DISK
 Action = Loading page from Disk and store page in the aux vector 
 |--------------------|       |--------------------|
-|     aux vector     |  <--  |    disk    - Page 0|
+|     aux vector     |  <--  |    disk    - Page 3|
 |--------------------|       |--------------------|
 |               xxxxx|       |          0x00000008|
 |--------------------|       |--------------------|
-|               xxxxx|       |          0x00000000|
+|               xxxxx|       |          0x00000009|
 |--------------------|       |--------------------|
 
 
 Location: DISK
 Action = Loading page from Main Memory and storing page in Disk 
 |--------------------|       |--------------------|
-|    disk    - Page 0|  <--  |Main Memory - Page 0|
+|    disk    - Page 3|  <--  |Main Memory - Page 3|
 |--------------------|       |--------------------|
-|               xxxxx|       |          0x00000004|
+|               xxxxx|       |          0x0000000e|
 |--------------------|       |--------------------|
-|               xxxxx|       |          0x00000005|
+|               xxxxx|       |          0x0000000f|
 |--------------------|       |--------------------|
 
 
 Location: MAINMEMORY
 Action = Store page in the Main Memory 
 |--------------------|       |--------------------|
-|Main Memory - Page 0|  <--  |     aux vector     |
+|Main Memory - Page 3|  <--  |     aux vector     |
 |--------------------|       |--------------------|
 |               xxxxx|       |          0x00000008|
 |--------------------|       |--------------------|
-|               xxxxx|       |          0x00000000|
+|               xxxxx|       |          0x00000009|
 |--------------------|       |--------------------|
 
 
 Location: PAGETABLE
 Action = Update the Page Table 
 |--------------------|       |--------------------|
-|          0x00000004|  <->  |          0x00000002|
+|          0x00000004|  <->  |          0x00000007|
 |--------------------|       |--------------------|
 
 
@@ -938,7 +1633,7 @@ Action = Translation Address  - Using = Page Table
 |----------------------------------------------------|     |----------------------------------------------------|
 |        Virtual Page          |PageOffSet|ByteOffSet| --> |           Frame Page         |PageOffSet|ByteOffSet|
 |------------------------------|----------|----------|     |-----------------------------------------|----------|
-| 00000000000000000000000000100|         0|       XX |     | 00000000000000000000000000000|         0|       XX |
+| 00000000000000000000000000100|         0|       XX |     | 00000000000000000000000000011|         0|       XX |
 |----------------------------------------------------|     |----------------------------------------------------|
 
 
@@ -946,7 +1641,7 @@ Action = Translation Address  - Using = Page Table
 
 Location: MAINMEMORY
 Action = Loading data from Main Memory  
-Block = 0 
+Block = 6 
 
 
 ------------------------------
@@ -954,33 +1649,33 @@ Block = 0
 ------------------------------
 
 Main Memory
-  Read Access: 64
-  Read Cycles: 64
-  Read Time: 640
-  Write Access: 6
-  Write Cycles: 12
-  Write Time: 120
-  Total Access: 70
-  Total Time: 760
+  Read Access: 124
+  Read Cycles: 124
+  Read Time: 1240
+  Write Access: 96
+  Write Cycles: 192
+  Write Time: 1920
+  Total Access: 220
+  Total Time: 3160
 
 Disk
-  Read Access: 1
-  Read Cycles: 1
-  Read Time: 100
-  Write Access: 1
-  Write Cycles: 2
-  Write Time: 200
-  Total Time: 300
+  Read Access: 16
+  Read Cycles: 16
+  Read Time: 1600
+  Write Access: 16
+  Write Cycles: 32
+  Write Time: 3200
+  Total Time: 4800
 
 Page Table
   Read Access: 30
   Read Cycles: 30
   Read Time: 300
-  Write Access: 2
-  Write Cycles: 4
-  Write Time: 40
+  Write Access: 32
+  Write Cycles: 64
+  Write Time: 640
   Total Access: 30
-  Page Fault: 1
-  Total Time: 340
+  Page Fault: 16
+  Total Time: 940
 
- Total Time: 1060
+ Total Time: 7960
